@@ -10,7 +10,7 @@ pygame.display.set_caption("RTS_GAME")
 clock = pygame.time.Clock()
 while True:
     win.fill((0, 100, 0))
-    for event in pygame.event.get():
+    for event in pygame.event.get(): # ДЛа
         if event.type == pygame.QUIT:
             exit()
     clock.tick(60)
