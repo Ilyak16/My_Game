@@ -9,7 +9,54 @@ def Quit():
     sys.exit()
 
 def Play():
-    print("Hi")
+    pygame.init()
+    window.fill((255, 255, 255))
+    res = (400, 400)
+    screen = pygame.transform.scale(window, res)
+    pygame.transform.scale(window, res)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+        window.blit(pygame.transform.scale(screen, res), (0, 0))
+        clock.tick(60)
+        pygame.display.update()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 pygame.init()
 pygame.display.set_caption("RTS_GAME")
 icon = pygame.image.load("images/icon.png")
@@ -23,9 +70,10 @@ Height = 900
 clock = pygame.time.Clock()
 window = pygame.display.set_mode((Width, Height))
 
+
 window.blit(nas, mest_nas)
 button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png", "Sounds/Klick.mp3")
-button_QUIT = Button.ImageButton(Width/2 - (250/2), 400,250, 75, "QUIT","images/Кнопка_до.png", "images/Кнопка_после.png", "Sounds/Klick.mp3")
+button_QUIT = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png", "Sounds/Klick.mp3")
 pygame.display.update()
 def main_menu():
     running = True
