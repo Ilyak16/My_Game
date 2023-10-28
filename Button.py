@@ -27,8 +27,11 @@ class ImageButton:
         screen.blit(text_surface, text_rect)
     def check_hover(self,mouse_pos):
         self.is_hovered = self.rect.collidepoint(mouse_pos)
-    def handle_event(self, event):
+    def click(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered:
-            if self.sound:
-                self.sound.play()
             pygame.event.post(pygame.event.Event(pygame.USEREVENT, button=self))
+    #def handle_event(self, event):
+        #if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered:
+            #if self.sound:
+                #self.sound.play()
+            #pygame.event.post(pygame.event.Event(pygame.USEREVENT, button=self))

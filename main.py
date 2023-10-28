@@ -14,6 +14,8 @@ def Play():
     res = (400, 400)
     screen = pygame.transform.scale(window, res)
     pygame.transform.scale(window, res)
+    title_rasmer = 16
+    chank_rasmer = 8
     while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -72,8 +74,8 @@ window = pygame.display.set_mode((Width, Height))
 
 
 window.blit(nas, mest_nas)
-button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png", "Sounds/Klick.mp3")
-button_QUIT = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png", "Sounds/Klick.mp3")
+button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
+button_QUIT = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
 pygame.display.update()
 def main_menu():
     running = True
@@ -89,7 +91,7 @@ def main_menu():
             if event.type == pygame.USEREVENT and event.button == button_PLAY:
                 Play()
             for btn in [button_QUIT, button_PLAY]:
-                btn.handle_event(event)
+                btn.click(event)
         for btn in [button_QUIT, button_PLAY]:
             btn.check_hover(pygame.mouse.get_pos())
             btn.Draw(window)
