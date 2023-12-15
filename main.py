@@ -36,8 +36,8 @@ pre_fon = pygame.image.load("images/Заставка.png")
 nas = pygame.image.load("images/COSMO.png")
 mest_nas = nas.get_rect(center=(620, 150))
 nas.set_colorkey('Black')
-lose = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 40)
-lose_name = lose.render("You lose!", False, (255, 255, 255))
+my_font = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 20)
+Score = my_font.render("SCORE ", False, (255, 255, 255))
 # Создание игрока с помощью класса
 gamer = Player(495, 660, 250, 240, "images/Player.png", 3, 10)
 #  Создание пули и списка под них
@@ -50,24 +50,31 @@ enemies = []
 pygame.display.set_icon(icon)
 Width = 1240
 Height = 900
+HS_z = int(0)
 clock = pygame.time.Clock()
 window = pygame.display.set_mode((Width, Height))
 window.blit(nas, mest_nas)
 # Создание кнопок с помощью класса
 button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
-button_QUIT = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
+button_QUIT = Button.ImageButton(Width/2 - (250/2), 500, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
+button_OPTION = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "OPTION", "images/Кнопка_до.png", "images/Кнопка_после.png")
 # Создаём функцию игры
 def Play():
     # Создание фона, таймера и ограничителя фпс и задавание здоровья игрока
     clock = pygame.time.Clock()
-    Fon = pygame.image.load("images/Fon.png")
+    Fon = pygame.image.load("images/Fon.jpg")
+    Fon = pygame.transform.scale(Fon, (1240, 900))
     spawn_timer = pygame.USEREVENT + 1
-    pygame.time.set_timer(spawn_timer, 3500)
+    pygame.time.set_timer(spawn_timer, 1000)
     gamer.HP = 3
+    Score_z = 0
+    per = 0
     gaming = True
     while gaming:
         # Вывод фона, отрисовка игрока, нахождение рандом места спавна, наделение игрока моделькой
         window.blit(Fon, (0, 0))
+        window.blit(Score, (0, 0))
+        window.blit(my_font.render(str(Score_z), False, (255, 255, 255)), (70, 0))
         window.blit(gamer.model, (gamer.player_x, gamer.player_y))
         enemy.enemy_x = random.randint(0, 1090)
         gamer_rect = gamer.model.get_rect(topleft=(gamer.player_x, gamer.player_y))
@@ -86,12 +93,22 @@ def Play():
                 el.y -= 10
                 if el.y < -70:
                     bullets.pop(i)
+                if enemies:
+                    for (ind, elm) in enumerate(enemies):
+                        if el.colliderect(elm):
+                            enemies.pop(ind)
+                            bullets.pop(i)
+                            Score_z += 125
         # Проверка на действия игрока
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and gamer.player_x > 0:
-            gamer.player_x -= gamer.speed
+            per = -gamer.speed
+            gamer.player_x += per
         elif keys[pygame.K_d] and gamer.player_x < Width - gamer.width_player:
-            gamer.player_x += gamer.speed
+            per = gamer.speed
+            gamer.player_x += per
+        else:
+            per = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -100,6 +117,11 @@ def Play():
                 bullets.append(bullet.get_rect(topleft=(gamer.player_x + 90, gamer.player_y - 30)))
             if event.type == spawn_timer:
                 enemies.append(enemy.model.get_rect(topleft=(enemy.enemy_x, enemy.enemy_y)))
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LSHIFT:
+                for i in range(10):
+                    gamer.player_x += per
+                    window.blit(gamer.model, (gamer.player_x, gamer.player_y))
+                    pygame.time.delay(1)
         # Проверка условий проигрыша
         if gamer.HP == 0:
             enemies.clear()
@@ -108,7 +130,6 @@ def Play():
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
-
 
 def main_menu():
     running = True
@@ -123,11 +144,13 @@ def main_menu():
             if event.type == pygame.USEREVENT and event.button == button_QUIT:
                 Quit()
             if event.type == pygame.USEREVENT and event.button == button_PLAY:
-                Play()
-            for btn in [button_QUIT, button_PLAY]:
+                 Play()
+            if event.type == pygame.USEREVENT and event.button == button_OPTION:
+                print("455")
+            for btn in [button_QUIT, button_PLAY, button_OPTION]:
                 btn.click(event)
         # Проверка наведённости
-        for btn in [button_QUIT, button_PLAY]:
+        for btn in [button_QUIT, button_PLAY, button_OPTION]:
             btn.check_hover(pygame.mouse.get_pos())
             btn.Draw(window)
         pygame.display.flip()
