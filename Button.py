@@ -21,7 +21,7 @@ class ImageButton:
     def Draw(self, screen):
         current_image = self.image_hover if self.is_hovered else self.image
         screen.blit(current_image, self.rect.topleft)
-        font = pygame.font.SysFont(None, 45)
+        font = pygame.font.SysFont("Fonts/bionicle-training-card-font-2-4.ttf", 45)
         text_surface = font.render(self.text, True, (0, 0, 0))
         text_rect = text_surface.get_rect(center=self.rect.center)
         screen.blit(text_surface, text_rect)

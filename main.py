@@ -121,7 +121,6 @@ def Play():
                 for i in range(10):
                     gamer.player_x += per
                     window.blit(gamer.model, (gamer.player_x, gamer.player_y))
-                    pygame.time.delay(1)
         # Проверка условий проигрыша
         if gamer.HP == 0:
             enemies.clear()
@@ -131,6 +130,33 @@ def Play():
         pygame.display.flip()
         clock.tick(60)
 
+def Pismo(fonte, x, y, color, nad):
+    pis = fonte.render(str(nad), False, (color))
+    window.blit(pis, (x, y))
+def Settings():
+    window.fill("Black")
+    Fon_set = pygame.transform.scale(pygame.image.load("images/Fon_set.png"), (Width, Height))
+    Font_bol = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 40)
+    Font_mal = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 14)
+    button_Back = ImageButton(1000, 850, 200, 70, "BACK", "images/Кнопка_до.png", "images/Кнопка_после.png")
+    while True:
+        window.blit(Fon_set, (0, 0))
+        Pismo(Font_bol, 65, 710, (0, 0, 0), "A")
+        Pismo(Font_bol, 185, 710, (0, 0, 0), "D")
+        Pismo(Font_bol, 365, 710, (0, 0, 0), "SPACE")
+        Pismo(Font_bol, 65, 815, (0, 0, 0), "L.SHIFT")
+        Pismo(Font_mal, 300, 200, (0, 0, 0), " Нашей планете начала угрожать великая опасность")
+
+        for event in pygame.event.get():
+            button_Back.click(event)
+            if event.type == pygame.QUIT:
+                Quit()
+            if event.type == pygame.USEREVENT and event.button == button_Back:
+                print("ABOBa")
+
+        button_Back.check_hover(pygame.mouse.get_pos())
+        button_Back.Draw(window)
+        pygame.display.update()
 def main_menu():
     running = True
     while running:
@@ -146,7 +172,7 @@ def main_menu():
             if event.type == pygame.USEREVENT and event.button == button_PLAY:
                  Play()
             if event.type == pygame.USEREVENT and event.button == button_OPTION:
-                print("455")
+                Settings()
             for btn in [button_QUIT, button_PLAY, button_OPTION]:
                 btn.click(event)
         # Проверка наведённости
