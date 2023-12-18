@@ -1,7 +1,5 @@
-import math
 import pygame
 import sys
-import time
 import random
 import Button
 
@@ -188,10 +186,3 @@ def main_menu():
             btn.Draw(window)
         pygame.display.flip()
 main_menu()
-
-
-
-
-#    while run:
-
-
