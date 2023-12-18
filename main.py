@@ -36,7 +36,7 @@ pre_fon = pygame.image.load("images/Заставка.png")
 nas = pygame.image.load("images/COSMO.png")
 mest_nas = nas.get_rect(center=(620, 150))
 nas.set_colorkey('Black')
-my_font = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 20)
+my_font = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 30)
 Score = my_font.render("SCORE ", False, (255, 255, 255))
 # Создание игрока с помощью класса
 gamer = Player(495, 660, 250, 240, "images/Player.png", 3, 10)
@@ -74,7 +74,9 @@ def Play():
         # Вывод фона, отрисовка игрока, нахождение рандом места спавна, наделение игрока моделькой
         window.blit(Fon, (0, 0))
         window.blit(Score, (0, 0))
-        window.blit(my_font.render(str(Score_z), False, (255, 255, 255)), (70, 0))
+        window.blit(my_font.render("HP", False, (255, 255, 255)), (1150, 0))
+        window.blit(my_font.render(str(gamer.HP), False, (255, 255, 255)), (1200, 0))
+        window.blit(my_font.render(str(Score_z), False, (255, 255, 255)), (100, 0))
         window.blit(gamer.model, (gamer.player_x, gamer.player_y))
         enemy.enemy_x = random.randint(0, 1090)
         gamer_rect = gamer.model.get_rect(topleft=(gamer.player_x, gamer.player_y))
@@ -86,6 +88,7 @@ def Play():
                 gamer.HP = 0
             if el.y > Height:
                 enemies.pop(e)
+                gamer.HP -= 1
         # Перебор пуль в списке
         if bullets:
             for (i, el) in enumerate(bullets):
@@ -137,22 +140,26 @@ def Settings():
     window.fill("Black")
     Fon_set = pygame.transform.scale(pygame.image.load("images/Fon_set.png"), (Width, Height))
     Font_bol = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 40)
-    Font_mal = pygame.font.Font("Fonts/bionicle-training-card-font-2-4.ttf", 14)
-    button_Back = ImageButton(1000, 850, 200, 70, "BACK", "images/Кнопка_до.png", "images/Кнопка_после.png")
-    while True:
+    Font_mal = pygame.font.Font("Fonts/bahnschrift.ttf", 22)
+    button_Back = ImageButton(1030, 830, 200, 70, "BACK", "images/Кнопка_до.png", "images/Кнопка_после.png")
+    Set = True
+    while Set:
         window.blit(Fon_set, (0, 0))
         Pismo(Font_bol, 65, 710, (0, 0, 0), "A")
         Pismo(Font_bol, 185, 710, (0, 0, 0), "D")
         Pismo(Font_bol, 365, 710, (0, 0, 0), "SPACE")
         Pismo(Font_bol, 65, 815, (0, 0, 0), "L.SHIFT")
-        Pismo(Font_mal, 300, 200, (0, 0, 0), " Нашей планете начала угрожать великая опасность")
-
+        Pismo(Font_mal, 300, 150, (0, 0, 0), "Над нашей планетой нависла опасность, которой никто не ожидал,")
+        Pismo(Font_mal, 300, 180, (0, 0, 0), "космические захватчики начали угрожать нашей планете и человечество")
+        Pismo(Font_mal, 300, 210, (0, 0, 0), "решило сплотиться,чтобы защитить планету и своё вид.")
+        Pismo(Font_mal, 300, 240, (0, 0, 0), "Вам выпала роль управляющего космическим кораблём, который стоит")
+        Pismo(Font_mal, 300, 280, (0, 0, 0), "буквально на передовой нашей планеты. Не подвидите, капитан!")
         for event in pygame.event.get():
             button_Back.click(event)
             if event.type == pygame.QUIT:
                 Quit()
             if event.type == pygame.USEREVENT and event.button == button_Back:
-                print("ABOBa")
+                Set = False
 
         button_Back.check_hover(pygame.mouse.get_pos())
         button_Back.Draw(window)
