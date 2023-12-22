@@ -30,8 +30,3 @@ class ImageButton:
     def click(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered:
             pygame.event.post(pygame.event.Event(pygame.USEREVENT, button=self))
-    #def handle_event(self, event):
-        #if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered:
-            #if self.sound:
-                #self.sound.play()
-            #pygame.event.post(pygame.event.Event(pygame.USEREVENT, button=self))

@@ -53,8 +53,8 @@ clock = pygame.time.Clock()
 window = pygame.display.set_mode((Width, Height))
 window.blit(nas, mest_nas)
 # Создание кнопок с помощью класса
-button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
-button_QUIT = Button.ImageButton(Width/2 - (250/2), 500, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png")#, "Sounds/Klick.mp3"
+button_PLAY = Button.ImageButton(Width/2 - (250/2), 300, 250, 75, "PLAY", "images/Кнопка_до.png", "images/Кнопка_после.png")
+button_QUIT = Button.ImageButton(Width/2 - (250/2), 500, 250, 75, "QUIT", "images/Кнопка_до.png", "images/Кнопка_после.png")
 button_OPTION = Button.ImageButton(Width/2 - (250/2), 400, 250, 75, "OPTION", "images/Кнопка_до.png", "images/Кнопка_после.png")
 # Создаём функцию игры
 def Play():
@@ -100,6 +100,8 @@ def Play():
                             enemies.pop(ind)
                             bullets.pop(i)
                             Score_z += 125
+                            if Score_z % 500 == 0:
+                                enemy.speed += 0.25
         # Проверка на действия игрока
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and gamer.player_x > 0:
